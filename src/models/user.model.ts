@@ -104,7 +104,6 @@ userSchema.methods.getOTP = function (): string {
 };
 
 // User schema indexes
-userSchema.index({ email: 1 });
 userSchema.index({ resetPasswordToken: 1 });
 userSchema.index({ otp: 1 });
 
