@@ -1,15 +1,19 @@
-import express from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
-import morgan from "morgan";
+import express from "express";
 import rateLimit from "express-rate-limit";
-import security from "./middlewares/security.js";
+import morgan from "morgan";
+
 import { ENV } from "./config/env.js";
-import logger from "./utils/logger.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import security from "./middlewares/security.js";
+import auth from "./routes/auth.route.js";
+import logger from "./utils/logger.js";
 
 const app = express();
 
 app.use(express.json({ limit: "10kb" }));
+app.use(cookieParser());
 app.use(
   cors({
     origin: ENV.CLIENT_URL,
@@ -38,6 +42,8 @@ const limiter = rateLimit({
 
 app.use(limiter);
 app.use(security);
+
+app.use("/api/v1/auth", auth);
 
 app.use(errorHandler);
 
