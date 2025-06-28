@@ -8,6 +8,7 @@ import { ENV } from "./config/env.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import security from "./middlewares/security.js";
 import auth from "./routes/auth.route.js";
+import user from "./routes/user.route.js";
 import logger from "./utils/logger.js";
 
 const app = express();
@@ -44,6 +45,7 @@ app.use(limiter);
 app.use(security);
 
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/users", user);
 
 app.use(errorHandler);
 
