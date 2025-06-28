@@ -20,13 +20,19 @@ export const isAuthenticatedUser = asyncErrorHandler(
       );
     }
 
-    const decodedData = jwt.verify(authToken, ENV.JWT_SECRET as Secret) as {
-      id: string;
-      email: string;
-    };
+    let decodedData;
+    try {
+      decodedData = jwt.verify(authToken, ENV.JWT_SECRET as Secret) as {
+        id: string;
+        email: string;
+      };
+    } catch (error) {
+      return next(
+        new ApiError(401, "Invalid or expired token. Please log in again.")
+      );
+    }
 
     const user = await User.findById(decodedData.id);
-
     if (!user) {
       return next(new ApiError(401, "User not found."));
     }

@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { asyncErrorHandler } from "../middlewares/asyncErrorHandler.js";
 import User from "../models/user.model.js";
 import { ApiError } from "../utils/apiError.js";
+import { clearCookie } from "../utils/cookies.js";
 
 export const getUserDetails = asyncErrorHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -36,9 +37,10 @@ export const updatePassword = asyncErrorHandler(
     user.password = req.body.newPassword;
     await user.save();
 
+    clearCookie(res, "aulg");
     res.status(200).json({
       success: true,
-      message: "Password updated successfully",
+      message: "Password updated successfully. Please log in again.",
     });
   }
 );

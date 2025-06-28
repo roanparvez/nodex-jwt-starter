@@ -45,7 +45,7 @@ app.use(limiter);
 app.use(security);
 
 app.use("/api/v1/auth", auth);
-app.use("/api/v1/users", user);
+app.use("/api/v1/user", user);
 
 app.use(errorHandler);
 

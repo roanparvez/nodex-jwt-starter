@@ -8,7 +8,7 @@ import { isAuthenticatedUser } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.route("/profile").get(getUserDetails);
+router.route("/profile").get(isAuthenticatedUser, getUserDetails);
 router.route("/password/update").put(isAuthenticatedUser, updatePassword);
 router.route("/profile/update").put(isAuthenticatedUser, updatePassword);
 
