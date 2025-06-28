@@ -11,7 +11,7 @@
     "lint:check": "eslint .",
     "prettier": "prettier . --write",
     "prettier:check": "prettier . --check",
-    "prepare": "husky"
+    "prepare": "if [ \"$CI\" != \"true\" ]; then husky install; fi"
   },
   "lint-staged": {
     "src/**/*.ts": [
